@@ -17,5 +17,5 @@ export async function changeDifficulty(request: FastifyRequest, reply: FastifyRe
   );
 
 
-  return reply.status(204).send(dificuldades)
+  return reply.status(200).send({dificuldades, success: true})
 }

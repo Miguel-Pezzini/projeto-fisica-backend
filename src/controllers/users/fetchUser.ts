@@ -17,5 +17,5 @@ export async function fetchUser(request: FastifyRequest, reply: FastifyReply) {
     dificuldades: user.dificuldade
   }
 
-  return reply.status(200).send({userToFront})
+  return reply.status(200).send({user: userToFront, success: true})
 }

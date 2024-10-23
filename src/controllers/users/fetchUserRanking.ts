@@ -13,5 +13,5 @@ export async function fetchUsersRanking(request: FastifyRequest, reply: FastifyR
     points: user.points,
   }));
 
-  return reply.status(200).send(userToFront)
+  return reply.status(200).send({users: userToFront, success: true})
 }

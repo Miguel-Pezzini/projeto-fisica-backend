@@ -14,7 +14,7 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
   const { username, password, email, dificuldades } = bodySchema.parse(request.body)
 
   const userAlreadyExists = (await app.pg.query('SELECT username FROM users WHERE username = $1', [username])).rows.length > 0;
-  const emailAlredyExists = (await app.pg.query('SELECT email FROM users WHERE username = $1', [email])).rows.length > 0;
+  const emailAlredyExists = (await app.pg.query('SELECT email FROM users WHERE email = $1', [email])).rows.length > 0;
 
   if(userAlreadyExists) {
     return reply.status(400).send({success: false, message: 'username alredy exists'})

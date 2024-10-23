@@ -31,7 +31,12 @@ export async function fetchQuestion(request: FastifyRequest, reply: FastifyReply
 
   const question = result.rows[0]
 
+  if(!question) {
+    return reply.status(400).send({ success: false, message: 'The system is out of questions'})
+  }
+
   const questionToFront = {
+    id: question.id,
     text: question.content,
     conteudo: question.conteudo,
     answers: [question.alternativa_a, question.alternativa_b, question.alternativa_c, question.alternativa_d, question.alternativa_e],
@@ -40,5 +45,5 @@ export async function fetchQuestion(request: FastifyRequest, reply: FastifyReply
     points: question.points,
   }
 
-  return reply.status(200).send(questionToFront)
+  return reply.status(200).send({question: questionToFront, success: true})
 }
