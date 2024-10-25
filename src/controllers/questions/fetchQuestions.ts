@@ -24,7 +24,9 @@ export async function fetchQuestion(request: FastifyRequest, reply: FastifyReply
       SELECT unnest(dificuldade) 
       INTERSECT 
       SELECT unnest($2::int[])
-    ), 1) > 0;
+    ), 1) > 0 
+    ORDER BY RANDOM() 
+    LIMIT 1;
     `,
     [conteudo, userDificuldades]
   );
