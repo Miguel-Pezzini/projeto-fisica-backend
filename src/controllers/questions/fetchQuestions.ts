@@ -15,6 +15,9 @@ export async function fetchQuestion(request: FastifyRequest, reply: FastifyReply
 
   const userDificuldades = resultUser.rows[0].dificuldade
 
+  const rightQuestions = resultUser.rows[0].rightquestions
+  
+  console.log(rightQuestions)
   const result = await app.pg.query(
     `
     SELECT *
@@ -25,10 +28,11 @@ export async function fetchQuestion(request: FastifyRequest, reply: FastifyReply
       INTERSECT 
       SELECT unnest($2::int[])
     ), 1) > 0 
+    AND id NOT IN (SELECT unnest($3::uuid[]))
     ORDER BY RANDOM() 
     LIMIT 1;
     `,
-    [conteudo, userDificuldades]
+    [conteudo, userDificuldades, rightQuestions]
   );
 
   const question = result.rows[0]
